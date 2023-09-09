@@ -23,27 +23,30 @@ class AppNavigator {
 
   Future<dynamic> pushNamed(String routeName, {dynamic arguments}) async {
     if (_context == null) return;
-    return await Navigator.pushNamed(_context!, routeName, arguments: arguments);
+    return await Navigator.pushNamed(_context!, routeName,
+        arguments: arguments);
   }
 
-  Future<dynamic> pushReplacementNamed(String routeName, {dynamic arguments, dynamic result}) async {
+  Future<dynamic> pushReplacementNamed(String routeName,
+      {dynamic arguments, dynamic result}) async {
     if (_context == null) return;
-    return await Navigator.pushReplacementNamed(_context!, routeName, arguments: arguments, result: result);
+    return await Navigator.pushReplacementNamed(_context!, routeName,
+        arguments: arguments, result: result);
   }
 
-  Future<dynamic> pushNamedAndRemoveUntil(String routeName, {dynamic arguments}) async {
+  Future<dynamic> pushNamedAndRemoveUntil(String routeName,
+      {dynamic arguments}) async {
     if (_context == null) return;
     return await Navigator.pushNamedAndRemoveUntil(
       _context!,
       routeName,
-          (Route<dynamic> route) => false,
+      (Route<dynamic> route) => false,
       arguments: arguments,
     );
   }
 
-  void back({dynamic result}) async {
+  void pop({dynamic result}) async {
     if (_context == null) return;
-    await Navigator.maybePop(_context!, result);
+    Navigator.of(_context!).pop();
   }
-
 }

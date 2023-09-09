@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:app_bloc/core/common/validators/fullname_validate.dart';
 import 'package:app_bloc/core/utils/navigation/app_navigator.dart';
+import 'package:app_bloc/core/utils/navigation/route_path.dart';
 import 'package:app_bloc/di/di.dart';
 import 'package:app_bloc/presentation/auth/widgets/auth_layout.dart';
 import 'package:app_bloc/presentation/register/bloc/register_bloc.dart';
@@ -24,31 +27,48 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getIt<AppNavigator>().setContext(context);
     return BlocProvider<RegisterBloc>(
       create: (context) => registerBloc,
       child: AuthLayout(
         hasLogo: false,
-        padding: const EdgeInsets.symmetric(horizontal: Globals.paddingMd).copyWith(bottom: 20),
-        welcome: const ['Welcome!', 'Let’s get started with a free Shopline account.'],
-        customLogo: GestureDetector(onTap: _onPop,child: Container(alignment: Alignment.centerLeft, margin: const EdgeInsets.only(bottom: 48), child: SvgPicture.asset(IconRes.icX))),
-          bottomWidget: Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(text: 'Already have an account? ', style: TextStyle(color: ColorResource.primary, fontWeight: FontWeight.w400)),
-                TextSpan(
-                    text: 'Login',
-                    style: const TextStyle(color: ColorResource.secondary, fontWeight: FontWeight.w700),
-                    recognizer: TapGestureRecognizer()..onTap = () => _onGotoLogin()),
-              ],
-            ),
-            textAlign: TextAlign.center,
+        padding: const EdgeInsets.symmetric(horizontal: Globals.paddingMd)
+            .copyWith(bottom: 20),
+        welcome: const [
+          'Welcome!',
+          'Let’s get started with a free Shopline account.'
+        ],
+        customLogo: GestureDetector(
+            onTap: () => _onPop(context),
+            child: Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(bottom: 48),
+                child: SvgPicture.asset(IconRes.icX))),
+        bottomWidget: Text.rich(
+          TextSpan(
+            children: [
+              const TextSpan(
+                  text: 'Already have an account? ',
+                  style: TextStyle(
+                      color: ColorResource.primary,
+                      fontWeight: FontWeight.w400)),
+              TextSpan(
+                  text: 'Login',
+                  style: const TextStyle(
+                      color: ColorResource.secondary,
+                      fontWeight: FontWeight.w700),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => _onGotoLogin()),
+            ],
           ),
+          textAlign: TextAlign.center,
+        ),
         builder: (BuildContext context) {
           return Column(
             children: [
               _buildRegisterForm(),
               const SizedBox(height: Globals.spaceMd),
-              const ButtonBase(title: 'Register'),
+              ButtonBase(title: 'Register', onPressed: _onRegister),
               const SizedBox(height: Globals.spaceXl),
               const OptionLogin(),
             ],
@@ -62,12 +82,14 @@ class RegisterPage extends StatelessWidget {
     return Column(
       children: [
         BlocBuilder<RegisterBloc, RegisterState>(
-          buildWhen: (previous, current) => current.fullName != previous.fullName,
+          buildWhen: (previous, current) =>
+              current.fullName != previous.fullName,
           builder: (context, state) {
             return InputField(
               hintText: 'Fullname',
               errorText: state.fullName.displayError?.toValue(),
-              onChanged: (fullName) => registerBloc.add(RegisterFullNameChanged(fullName)),
+              onChanged: (fullName) =>
+                  registerBloc.add(RegisterFullNameChanged(fullName)),
               prefixIcon: SvgPicture.asset(IconRes.icFullnameLight),
             );
           },
@@ -79,17 +101,20 @@ class RegisterPage extends StatelessWidget {
             return InputField(
               hintText: 'Email',
               errorText: state.email.displayError,
-              onChanged: (email) => registerBloc.add(RegisterEmailChanged(email)),
+              onChanged: (email) =>
+                  registerBloc.add(RegisterEmailChanged(email)),
               prefixIcon: SvgPicture.asset(IconRes.icEmailLight),
             );
           },
         ),
         const SizedBox(height: Globals.space),
         BlocBuilder<RegisterBloc, RegisterState>(
-          buildWhen: (previous, current) => current.password != previous.password,
+          buildWhen: (previous, current) =>
+              current.password != previous.password,
           builder: (context, state) {
             return InputField(
-              onChanged: (password) => registerBloc.add(RegisterPasswordChanged(password)),
+              onChanged: (password) =>
+                  registerBloc.add(RegisterPasswordChanged(password)),
               hintText: 'Password',
               errorText: state.email.displayError,
               prefixIcon: SvgPicture.asset(IconRes.icPasswordLight),
@@ -98,7 +123,9 @@ class RegisterPage extends StatelessWidget {
                 builder: (context, show) {
                   return GestureDetector(
                     onTap: () => registerBloc.add(TogglePasswordEvent()),
-                    child: show.showPassword ? SvgPicture.asset(IconRes.icPasswordLight) : SvgPicture.asset(IconRes.icEyeOffLight),
+                    child: show.showPassword
+                        ? SvgPicture.asset(IconRes.icPasswordLight)
+                        : SvgPicture.asset(IconRes.icEyeOffLight),
                   );
                 },
               ),
@@ -110,10 +137,14 @@ class RegisterPage extends StatelessWidget {
   }
 
   void _onGotoLogin() {
-    getIt<AppNavigator>().back();
+    getIt<AppNavigator>().pop();
   }
 
-  void _onPop() {
-    getIt<AppNavigator>().back();
+  void _onPop(BuildContext context) {
+    getIt<AppNavigator>().pop();
+  }
+
+  void _onRegister() {
+    getIt<AppNavigator>().pushNamed(RoutePath.enterOTP);
   }
 }

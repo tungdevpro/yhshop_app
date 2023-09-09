@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:app_bloc/core/common/extensions/context_extension.dart';
 import 'package:app_bloc/core/constants/app_constants.dart';
 import 'package:app_bloc/core/constants/color_resource.dart';
 import 'package:app_bloc/core/constants/icon_resource.dart';
@@ -33,11 +30,18 @@ class LoginPage extends StatelessWidget {
         bottomWidget: Text.rich(
           TextSpan(
             children: [
-              const TextSpan(text: 'Already have an account? ', style: TextStyle(color: ColorResource.primary, fontWeight: FontWeight.w400)),
+              const TextSpan(
+                  text: 'Already have an account? ',
+                  style: TextStyle(
+                      color: ColorResource.primary,
+                      fontWeight: FontWeight.w400)),
               TextSpan(
                   text: 'Register',
-                  style: const TextStyle(color: ColorResource.secondary, fontWeight: FontWeight.w700),
-                  recognizer: TapGestureRecognizer()..onTap = () => _onGotoRegister(context)),
+                  style: const TextStyle(
+                      color: ColorResource.secondary,
+                      fontWeight: FontWeight.w700),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => _onGotoRegister(context)),
             ],
           ),
           textAlign: TextAlign.center,
@@ -65,7 +69,11 @@ class LoginPage extends StatelessWidget {
       child: const Align(
         alignment: Alignment.centerRight,
         child: Text('Forgot Password?',
-            textAlign: TextAlign.right, style: TextStyle(color: ColorResource.secondary, fontSize: 14, fontWeight: FontWeight.w700)),
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                color: ColorResource.secondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w700)),
       ),
     );
   }
@@ -86,10 +94,12 @@ class LoginPage extends StatelessWidget {
         ),
         const SizedBox(height: Globals.space),
         BlocBuilder<LoginBloc, LoginState>(
-          buildWhen: (previous, current) => current.password != previous.password,
+          buildWhen: (previous, current) =>
+              current.password != previous.password,
           builder: (context, state) {
             return InputField(
-              onChanged: (password) => loginBloc.add(LoginPasswordChanged(password)),
+              onChanged: (password) =>
+                  loginBloc.add(LoginPasswordChanged(password)),
               hintText: 'Password',
               errorText: state.email.displayError,
               prefixIcon: SvgPicture.asset(IconRes.icPasswordLight),
@@ -98,7 +108,9 @@ class LoginPage extends StatelessWidget {
                 builder: (context, show) {
                   return GestureDetector(
                     onTap: () => loginBloc.add(TogglePasswordEvent()),
-                    child: show.showPassword ? SvgPicture.asset(IconRes.icPasswordLight) : SvgPicture.asset(IconRes.icEyeOffLight),
+                    child: show.showPassword
+                        ? SvgPicture.asset(IconRes.icPasswordLight)
+                        : SvgPicture.asset(IconRes.icEyeOffLight),
                   );
                 },
               ),

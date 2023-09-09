@@ -22,28 +22,30 @@ enum DialogTransitionMode {
 }
 
 Future<dynamic> showAnimatedDialog(
-    BuildContext context, {
-      bool barrierDismissible = false,
-      required WidgetBuilder builder,
-      DialogTransitionMode animationType = DialogTransitionMode.fade,
-      Curve curve = Curves.linear,
-      Duration? duration,
-      Alignment alignment = Alignment.center,
-      Axis? axis,
-      Color? barrierColor,
-    }) async {
+  BuildContext context, {
+  bool barrierDismissible = false,
+  required WidgetBuilder builder,
+  DialogTransitionMode animationType = DialogTransitionMode.fade,
+  Curve curve = Curves.linear,
+  Duration? duration,
+  Alignment alignment = Alignment.center,
+  Axis? axis,
+  Color? barrierColor,
+}) async {
   isShowing = true;
   return showGeneralDialog(
     context: context,
-    pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+    pageBuilder: (BuildContext buildContext, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
       final Widget pageChild = Builder(builder: builder);
-      return SafeArea(top: false, child: Builder(builder: (BuildContext context) => pageChild));
+      return Builder(builder: (BuildContext context) => pageChild);
     },
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: barrierColor ?? Colors.black54,
     transitionDuration: duration ?? const Duration(milliseconds: 400),
-    transitionBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    transitionBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation, Widget child) {
       switch (animationType) {
         case DialogTransitionMode.fade:
           return FadeTransition(opacity: animation, child: child);
@@ -183,13 +185,19 @@ Future<dynamic> showAnimatedDialog(
           return Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
-              ..translate(0.0, Tween<double>(begin: -50.0, end: 50.0).animate(CurvedAnimation(curve: const Interval(.1, .5), parent: animation)).value)
-            // ..translate(Tween<double>(begin: -100.0, end: 0).animate(CurvedAnimation(curve: const Interval(.1, .5), parent: animation)).value, .0)
+              ..translate(
+                  0.0,
+                  Tween<double>(begin: -50.0, end: 50.0)
+                      .animate(CurvedAnimation(
+                          curve: const Interval(.1, .5), parent: animation))
+                      .value)
+              // ..translate(Tween<double>(begin: -100.0, end: 0).animate(CurvedAnimation(curve: const Interval(.1, .5), parent: animation)).value, .0)
               ..scale(
                 Tween<double>(begin: .5, end: 1.0)
                     .animate(
-                  CurvedAnimation(curve: const Interval(.5, .9), parent: animation),
-                )
+                      CurvedAnimation(
+                          curve: const Interval(.5, .9), parent: animation),
+                    )
                     .value,
               ),
             child: child,

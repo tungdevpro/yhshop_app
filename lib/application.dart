@@ -10,7 +10,7 @@ import 'package:app_bloc/di/di.dart';
 import 'package:app_bloc/presentation/auth/bloc/auth_bloc.dart';
 import 'package:app_bloc/presentation/auth/bloc/auth_event.dart';
 import 'package:app_bloc/presentation/auth/bloc/auth_state.dart';
-import 'package:app_bloc/presentation/home/home_page.dart';
+import 'package:app_bloc/presentation/initial/initial_page.dart';
 import 'package:app_bloc/presentation/internet_status/internet_status_page.dart';
 import 'package:app_bloc/presentation/intro/intro_page.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -32,8 +32,11 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<AppBloc>()..add(AppInitialEvent())),
-        BlocProvider(create: (context) => getIt<AuthBloc>()..add(const AuthInitialEvent())),
+        BlocProvider(
+            create: (context) => getIt<AppBloc>()..add(AppInitialEvent())),
+        BlocProvider(
+            create: (context) =>
+                getIt<AuthBloc>()..add(const AuthInitialEvent())),
       ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
@@ -48,12 +51,18 @@ class _ApplicationState extends State<Application> {
             home: StreamBuilder<ConnectivityResult>(
               stream: bloc.connectivityStream,
               builder: (context, snapshot) {
-                final isConnected = [ConnectivityResult.wifi, ConnectivityResult.ethernet, ConnectivityResult.mobile].contains(snapshot.data);
+                final isConnected = [
+                  ConnectivityResult.wifi,
+                  ConnectivityResult.ethernet,
+                  ConnectivityResult.mobile
+                ].contains(snapshot.data);
                 return Stack(
                   fit: StackFit.expand,
                   children: [
-                    __BuildAppContent(bloc: bloc),
-                    if (!isConnected && snapshot.connectionState != ConnectionState.waiting) const InternetStatusPage()
+                    ApplicationContent(bloc: bloc),
+                    if (!isConnected &&
+                        snapshot.connectionState != ConnectionState.waiting)
+                      const InternetStatusPage()
                   ],
                 );
               },
@@ -65,20 +74,20 @@ class _ApplicationState extends State<Application> {
   }
 }
 
-class __BuildAppContent extends StatefulWidget {
+class ApplicationContent extends StatefulWidget {
   final AppBloc bloc;
 
-  const __BuildAppContent({required this.bloc});
+  const ApplicationContent({super.key, required this.bloc});
 
   @override
-  State<__BuildAppContent> createState() => __BuildAppContentState();
+  State<ApplicationContent> createState() => ApplicationContentState();
 }
 
-class __BuildAppContentState extends State<__BuildAppContent> {
+class ApplicationContentState extends State<ApplicationContent> {
   @override
   void initState() {
-    getIt<AppNavigator>().setContext(context);
     super.initState();
+    getIt<AppNavigator>().setContext(context);
   }
 
   @override
@@ -88,14 +97,14 @@ class __BuildAppContentState extends State<__BuildAppContent> {
       listeners: [
         BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if(state is AuthNotLoggedIn) {
+            if (state is AuthNotLoggedIn) {
               getIt<AppNavigator>().pushNamedAndRemoveUntil(RoutePath.login);
               return;
             }
           },
         ),
       ],
-      child: const HomePage(),
+      child: const InitialPage(),
     );
   }
 }

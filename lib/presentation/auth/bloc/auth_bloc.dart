@@ -7,16 +7,11 @@ import '../../../di/di.dart';
 @singleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitialState()) {
-   on<AuthInitialEvent>(_onInitial);
+    on<AuthInitialEvent>(_onInitial);
   }
   static AuthBloc get to => getIt<AuthBloc>();
 
-
   void _onInitial(AuthInitialEvent changed, Emitter<AuthState> emitter) {
     emitter.call(AuthNotLoggedIn());
-  }
-
-  Future<String> _getUserData() async {
-    return '';
   }
 }

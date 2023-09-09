@@ -17,6 +17,7 @@ abstract class Globals {
   static const double circle = 100.0;
   static const double fsSm = 11;
   static const double fsMd = 14;
+  static const double fsLg = 16;
+
   static const double fsXxl = 28;
 }
-

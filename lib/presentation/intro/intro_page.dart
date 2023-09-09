@@ -1,8 +1,6 @@
 import 'package:app_bloc/core/constants/app_constants.dart';
 import 'package:app_bloc/core/constants/color_resource.dart';
 import 'package:app_bloc/core/constants/img_resource.dart';
-import 'package:app_bloc/core/utils/navigation/app_navigator.dart';
-import 'package:app_bloc/core/utils/navigation/route_path.dart';
 import 'package:app_bloc/di/di.dart';
 import 'package:app_bloc/presentation/intro/cubit/intro_cubit.dart';
 import 'package:app_bloc/presentation/intro/widgets/bottom_intro.dart';
@@ -59,16 +57,21 @@ class _IntroPageState extends State<IntroPage> {
                                 height: 8,
                                 margin: const EdgeInsets.only(right: 10),
                                 decoration: BoxDecoration(
-                                    color: state == index ? ColorResource.primary : ColorResource.primary100,
-                                    borderRadius: BorderRadius.circular(Globals.circle)),
+                                    color: state == index
+                                        ? ColorResource.primary
+                                        : ColorResource.primary100,
+                                    borderRadius:
+                                        BorderRadius.circular(Globals.circle)),
                               ),
                             ).toList(),
                           );
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(top: 20),
-                        child: ButtonBase(title: 'Get Started', onPressed: cubit.gotoGetting),
+                        padding: const EdgeInsets.symmetric(horizontal: 24)
+                            .copyWith(top: 20),
+                        child: ButtonBase(
+                            title: 'Get Started', onPressed: cubit.gotoGetting),
                       ),
                       const SizedBox(height: Globals.paddingMd),
                       const BottomIntro()
@@ -90,8 +93,12 @@ class _IntroPageState extends State<IntroPage> {
   List<Widget> pages() {
     return [
       const Intro1(),
-      const Intro1(title: 'Get real-time updates for all deliveries', image: ImgRes.imgIntro2),
-      const Intro1(title: 'Follow and get update from favorite store', image: ImgRes.imgIntro3),
+      const Intro1(
+          title: 'Get real-time updates for all deliveries',
+          image: ImgRes.imgIntro2),
+      const Intro1(
+          title: 'Follow and get update from favorite store',
+          image: ImgRes.imgIntro3),
     ];
   }
 

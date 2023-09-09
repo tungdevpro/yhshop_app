@@ -1,4 +1,5 @@
 import 'package:app_bloc/core/utils/navigation/route_path.dart';
+import 'package:app_bloc/presentation/enter_otp/enter_otp_page.dart';
 import 'package:app_bloc/presentation/getting_started/getting_started_page.dart';
 import 'package:app_bloc/presentation/register/register_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +12,16 @@ Map<String, WidgetBuilder> routes = {
   RoutePath.gettingStarted: (_) => const GettingStartedPage(),
   RoutePath.login: (_) => LoginPage(),
   RoutePath.register: (_) => RegisterPage(),
+  RoutePath.enterOTP: (_) => EnterOTPPage()
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
   String? routeName = settings.name?.split('?').first;
 
   return CupertinoPageRoute(
-      builder: routes[routeName] ?? (_) => const Scaffold(body: Text("empty route"),), settings: settings);
+      builder: routes[routeName] ??
+          (_) => const Scaffold(
+                body: Text("empty route"),
+              ),
+      settings: settings);
 }
