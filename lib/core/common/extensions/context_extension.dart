@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,10 +17,10 @@ extension ContextExtension on BuildContext {
   double get paddingTop => MediaQuery.of(this).padding.top;
 
   Future<void> copyText(
-      String text, {
-        bool showToast = true,
-        VoidCallback? callback,
-      }) {
+    String text, {
+    bool showToast = true,
+    VoidCallback? callback,
+  }) {
     var data = ClipboardData(text: text);
     return Clipboard.setData(data).then((_) {
       callback?.call();
@@ -46,7 +47,6 @@ extension NavigatorStateExtension on NavigatorState {
   }
 }
 
-
 extension ModalRouteExtension on BuildContext {
   ModalRoute? get modalRoute => ModalRoute.of(this);
 
@@ -71,4 +71,73 @@ extension ThemeCtxExtension on BuildContext {
   bool get isWindows => platform == TargetPlatform.windows;
 
   bool get isFuchsia => platform == TargetPlatform.fuchsia;
+}
+
+extension NavigatorExtension on BuildContext {
+  NavigatorState get navigator => Navigator.of(this);
+
+  Future<T?> push<T extends Object?>(Route<T> route) => navigator.push(route);
+
+  Future<T?> toPage<T extends Object?>(Widget child) =>
+      navigator.push(CupertinoPageRoute(builder: (_) => child));
+
+  Future<T?> popToPage<T extends Object?>(Widget child) {
+    navigator.pop();
+    return navigator.push(CupertinoPageRoute(builder: (_) => child));
+  }
+
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
+          Route<T> route,
+          {TO? result}) =>
+      navigator.pushReplacement(route, result: result);
+
+  Future<T?> pushNamed<T extends Object?>(String routeName,
+      {Object? arguments}) {
+    return navigator.pushNamed(routeName, arguments: arguments);
+  }
+
+  Future<T?> pushReplacementNamed<T extends Object?, TO extends Object?>(
+      String routeName,
+      {TO? result,
+      Object? arguments}) {
+    return navigator.pushReplacementNamed(routeName,
+        result: result, arguments: arguments);
+  }
+
+  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+      String routeName,
+      {TO? result,
+      Object? arguments}) {
+    return navigator.popAndPushNamed(routeName,
+        result: result, arguments: arguments);
+  }
+
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(
+      String newRouteName, RoutePredicate predicate,
+      {Object? arguments}) {
+    return navigator.pushNamedAndRemoveUntil(newRouteName, predicate,
+        arguments: arguments);
+  }
+
+  Future<T?> pushAndRemoveUntil<T extends Object?>(
+      Route<T> newRoute, RoutePredicate predicate) {
+    return navigator.pushAndRemoveUntil(newRoute, predicate);
+  }
+
+  void replace<T extends Object?>(
+          {required Route<dynamic> oldRoute, required Route<T> newRoute}) =>
+      navigator.replace(oldRoute: oldRoute, newRoute: newRoute);
+
+  void replaceRouteBelow<T extends Object?>(
+          {required Route<dynamic> anchorRoute, required Route<T> newRoute}) =>
+      navigator.replaceRouteBelow(anchorRoute: anchorRoute, newRoute: newRoute);
+
+  bool canPop() => navigator.canPop();
+
+  Future<bool> maybePop<T extends Object?>([T? result]) =>
+      navigator.maybePop(result);
+
+  void pop<T extends Object?>([T? result]) {
+    return navigator.pop(result);
+  }
 }
