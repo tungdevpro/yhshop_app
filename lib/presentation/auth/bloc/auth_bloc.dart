@@ -1,3 +1,4 @@
+import 'package:app_bloc/data/models/user_model.dart';
 import 'package:app_bloc/presentation/auth/bloc/auth_event.dart';
 import 'package:app_bloc/presentation/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc get to => getIt<AuthBloc>();
 
   void _onInitial(AuthInitialEvent changed, Emitter<AuthState> emitter) {
-    emitter.call(AuthNotLoggedIn());
+    // emitter.call(AuthNotLoggedIn());
+    emitter.call(AuthUserChanged(user: UserModel(userId: '123')));
   }
 }

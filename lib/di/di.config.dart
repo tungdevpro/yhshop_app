@@ -14,13 +14,14 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../core/base/app/app_bloc.dart' as _i3;
 import '../core/utils/navigation/app_navigator.dart' as _i4;
-import '../data/remote/provider/user_provider.dart' as _i10;
-import '../data/remote/repository/user_repository.dart' as _i11;
+import '../data/remote/provider/user_provider.dart' as _i11;
+import '../data/remote/repository/user_repository.dart' as _i12;
 import '../presentation/auth/bloc/auth_bloc.dart' as _i5;
 import '../presentation/enter_otp/bloc/enter_otp_bloc.dart' as _i6;
-import '../presentation/intro/cubit/intro_cubit.dart' as _i7;
-import '../presentation/login/bloc/login_bloc.dart' as _i8;
-import '../presentation/register/bloc/register_bloc.dart' as _i9;
+import '../presentation/home/bloc/home_bloc.dart' as _i7;
+import '../presentation/intro/cubit/intro_cubit.dart' as _i8;
+import '../presentation/login/bloc/login_bloc.dart' as _i9;
+import '../presentation/register/bloc/register_bloc.dart' as _i10;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -39,11 +40,12 @@ _i1.GetIt initGetIt(
   gh.singleton<_i4.AppNavigator>(_i4.AppNavigator());
   gh.singleton<_i5.AuthBloc>(_i5.AuthBloc());
   gh.factory<_i6.EnterOTPBloc>(() => _i6.EnterOTPBloc());
-  gh.factory<_i7.IntroCubit>(() => _i7.IntroCubit());
-  gh.factory<_i8.LoginBloc>(() => _i8.LoginBloc());
-  gh.factory<_i9.RegisterBloc>(() => _i9.RegisterBloc());
-  gh.lazySingleton<_i10.UserProvider>(() => _i10.UserProvider());
-  gh.singleton<_i11.UserRepository>(
-      _i11.UserRepository(gh<_i10.UserProvider>()));
+  gh.factory<_i7.HomeBloc>(() => _i7.HomeBloc());
+  gh.factory<_i8.IntroCubit>(() => _i8.IntroCubit());
+  gh.factory<_i9.LoginBloc>(() => _i9.LoginBloc());
+  gh.factory<_i10.RegisterBloc>(() => _i10.RegisterBloc());
+  gh.lazySingleton<_i11.UserProvider>(() => _i11.UserProvider());
+  gh.singleton<_i12.UserRepository>(
+      _i12.UserRepository(gh<_i11.UserProvider>()));
   return getIt;
 }

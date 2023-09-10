@@ -101,6 +101,10 @@ class ApplicationContentState extends State<ApplicationContent> {
               getIt<AppNavigator>().pushNamedAndRemoveUntil(RoutePath.login);
               return;
             }
+            if (state is AuthUserChanged) {
+              getIt<AppNavigator>().pushNamedAndRemoveUntil(RoutePath.home);
+              return;
+            }
           },
         ),
       ],

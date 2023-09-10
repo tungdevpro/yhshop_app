@@ -32,4 +32,5 @@ abstract class ColorResource {
   static const Color blue = Color(0xFF0062FF);
   static const Color purple = Color(0xFF764AF1);
   static const Color orderGreen = Color(0xFF1A4D2E);
+  static const Color alertErrorBase = Color(0xFFFF4747);
 }

@@ -1,6 +1,7 @@
 import 'package:app_bloc/core/utils/navigation/route_path.dart';
 import 'package:app_bloc/presentation/enter_otp/enter_otp_page.dart';
 import 'package:app_bloc/presentation/getting_started/getting_started_page.dart';
+import 'package:app_bloc/presentation/home/home_page.dart';
 import 'package:app_bloc/presentation/register/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../../../presentation/initial/initial_page.dart';
 
 Map<String, WidgetBuilder> routes = {
   RoutePath.initial: (_) => const InitialPage(),
+  RoutePath.home: (_) => const HomePage(),
   RoutePath.gettingStarted: (_) => const GettingStartedPage(),
   RoutePath.login: (_) => LoginPage(),
   RoutePath.register: (_) => RegisterPage(),

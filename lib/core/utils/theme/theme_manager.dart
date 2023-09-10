@@ -5,7 +5,11 @@ abstract class ThemeManager {
   ThemeManager._();
 
   static ThemeData get light => ThemeData(
-        appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
+        appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle.dark,
+            backgroundColor: Colors.white,
+            elevation: .0),
         fontFamily: 'PlusJakartaSans',
+        scaffoldBackgroundColor: Colors.white,
       );
 }
