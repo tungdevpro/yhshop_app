@@ -13,12 +13,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        HomeFeedActive s = (state as HomeFeedActive);
-        return _buildBottomNavigator(context, s.index);
-      },
-    );
+    return BlocSelector<HomeBloc, HomeState, int>(
+        selector: (state) => (state as HomeFeedActive).index,
+        builder: (_, index) {
+          return _buildBottomNavigator(context, index);
+        });
   }
 
   BottomNavigationBar _buildBottomNavigator(BuildContext context, int index) {
