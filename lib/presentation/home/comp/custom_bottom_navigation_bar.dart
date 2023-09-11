@@ -9,7 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key});
+  final ValueChanged? onTap;
+  const CustomBottomNavigationBar({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   BottomNavigationBar _buildBottomNavigator(BuildContext context, int index) {
     return BottomNavigationBar(
-      onTap: (value) => context.read<HomeBloc>().add(HomeSectionChangedEvent(index: value)),
+      onTap: (value) {
+        context.read<HomeBloc>().add(HomeSectionChangedEvent(index: value));
+        onTap?.call(value);
+      },
       currentIndex: index,
       backgroundColor: Colors.white,
       items: [
