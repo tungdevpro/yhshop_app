@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'comp/home_content_comp.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         body: PageView(
           controller: pageController,
           children: const [
-            SizedBox(),
+            HomeContentComp(),
             SearchPage(),
             WishListPage(),
             BagPage(),
