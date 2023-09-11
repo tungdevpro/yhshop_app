@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  final ValueChanged? onTap;
+  final ValueChanged<int>? onTap;
   const CustomBottomNavigationBar({super.key, this.onTap});
 
   @override
