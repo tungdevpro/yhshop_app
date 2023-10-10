@@ -30,7 +30,6 @@ Future<List<String>> getFileNamesInFolder(String folderPath) {
       .toList();
 }
 
-
 String snakeCase(String text) {
   String a = text.toLowerCase().replaceAllMapped(RegExp(r'[-_\s.]+(.)?'), (match) {
     String? c = match.group(1);
